@@ -1,0 +1,4 @@
+packages/backend/target/*
+packages/backend/.env
+packages/frontend/node_modules/*
+packages/frontend/.env
