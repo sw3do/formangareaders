@@ -27,6 +27,8 @@
   "common": {
     "welcome": "Welcome to ForMangaReaders",
     "description": "Discover and read your favorite manga series from around the world. Join our community of manga enthusiasts and explore thousands of titles across all genres.",
-    "language": "Language"
+    "language": "Language",
+    "loading": "Loading...",
+    "appPreparing": "Application is being prepared"
   }
 }

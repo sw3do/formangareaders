@@ -12,8 +12,12 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxtjs/color-mode',
     '@vueuse/nuxt',
-    '@nuxtjs/i18n'
+    '@nuxtjs/i18n',
+    '@nuxt/icon'
   ],
+  icon: {
+    collections: ['heroicons', 'lucide', 'tabler', 'material-symbols']
+  },
   css: ['~/assets/css/main.css'],
   colorMode: {
     preference: 'system',
@@ -43,6 +47,12 @@ export default defineNuxtConfig({
       redirectOn: 'root',
       alwaysRedirect: false,
       fallbackLocale: 'en'
+    }
+  },
+  runtimeConfig: {
+    public: {
+      appName: process.env.APP_NAME || 'ForMangaReaders',
+      apiUrl: process.env.API_URL || 'http://localhost:8080/api/v1'
     }
   },
   vite: {

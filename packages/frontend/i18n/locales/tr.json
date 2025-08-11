@@ -27,6 +27,8 @@
   "common": {
     "welcome": "ForMangaReaders'a Hoş Geldiniz",
     "description": "Dünyanın dört bir yanından favori manga serilerinizi keşfedin ve okuyun. Manga tutkunlarından oluşan topluluğumuza katılın ve tüm türlerden binlerce başlığı keşfedin.",
-    "language": "Dil"
+    "language": "Dil",
+    "loading": "Yükleniyor...",
+    "appPreparing": "Uygulama hazırlanıyor"
   }
 }
