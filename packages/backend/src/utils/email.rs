@@ -33,8 +33,7 @@ impl EmailService {
         verification_token: &str,
         frontend_url: &str,
     ) -> Result<()> {
-        let verification_url =
-            format!("{frontend_url}/verify-email?token={verification_token}");
+        let verification_url = format!("{frontend_url}/verify-email?token={verification_token}");
 
         let html_body = format!(
             r#"

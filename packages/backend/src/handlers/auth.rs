@@ -1,7 +1,7 @@
 use crate::error::{AppError, Result};
 use crate::models::{
-    ForgotPasswordRequest, LoginRequest, OAuthCallbackQuery, RegisterRequest,
-    ResetPasswordRequest, User, UserResponse, VerifyEmailRequest,
+    ForgotPasswordRequest, LoginRequest, OAuthCallbackQuery, RegisterRequest, ResetPasswordRequest,
+    User, UserResponse, VerifyEmailRequest,
 };
 use crate::routes::auth::AppState;
 use axum::{

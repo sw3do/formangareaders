@@ -4,6 +4,43 @@ use sqlx::FromRow;
 use uuid::Uuid;
 use validator::Validate;
 
+#[derive(Debug, Clone, Serialize, Deserialize, sqlx::Type, PartialEq, Eq)]
+#[sqlx(type_name = "user_role", rename_all = "lowercase")]
+#[derive(Default)]
+pub enum UserRole {
+    #[default]
+    User,
+    Moderator,
+    Admin,
+}
+
+
+impl UserRole {
+    pub fn is_admin(&self) -> bool {
+        matches!(self, UserRole::Admin)
+    }
+
+    pub fn is_moderator(&self) -> bool {
+        matches!(self, UserRole::Moderator)
+    }
+
+    pub fn is_user(&self) -> bool {
+        matches!(self, UserRole::User)
+    }
+
+    pub fn can_moderate(&self) -> bool {
+        matches!(self, UserRole::Moderator | UserRole::Admin)
+    }
+
+    pub fn can_admin(&self) -> bool {
+        matches!(self, UserRole::Admin)
+    }
+
+    pub fn has_permission(&self, required_role: &UserRole) -> bool {
+        matches!((self, required_role), (UserRole::Admin, _) | (UserRole::Moderator, UserRole::User | UserRole::Moderator) | (UserRole::User, UserRole::User))
+    }
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize, FromRow)]
 pub struct User {
     pub id: Uuid,
@@ -12,6 +49,7 @@ pub struct User {
     pub password_hash: Option<String>,
     pub display_name: Option<String>,
     pub avatar_url: Option<String>,
+    pub role: UserRole,
     pub is_verified: bool,
     pub verification_token: Option<String>,
     pub verification_expires_at: Option<DateTime<Utc>>,
@@ -24,6 +62,32 @@ pub struct User {
     pub updated_at: DateTime<Utc>,
 }
 
+impl User {
+    pub fn is_admin(&self) -> bool {
+        self.role.is_admin()
+    }
+
+    pub fn is_moderator(&self) -> bool {
+        self.role.is_moderator()
+    }
+
+    pub fn is_user(&self) -> bool {
+        self.role.is_user()
+    }
+
+    pub fn can_moderate(&self) -> bool {
+        self.role.can_moderate()
+    }
+
+    pub fn can_admin(&self) -> bool {
+        self.role.can_admin()
+    }
+
+    pub fn has_permission(&self, required_role: &UserRole) -> bool {
+        self.role.has_permission(required_role)
+    }
+}
+
 #[derive(Debug, Serialize, Deserialize)]
 pub struct UserResponse {
     pub id: Uuid,
@@ -31,6 +95,7 @@ pub struct UserResponse {
     pub username: String,
     pub display_name: Option<String>,
     pub avatar_url: Option<String>,
+    pub role: UserRole,
     pub is_verified: bool,
     pub provider: String,
     pub locale: String,
@@ -45,6 +110,7 @@ impl From<User> for UserResponse {
             username: user.username,
             display_name: user.display_name,
             avatar_url: user.avatar_url,
+            role: user.role,
             is_verified: user.is_verified,
             provider: user.provider,
             locale: user.locale,
