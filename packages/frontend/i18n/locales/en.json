@@ -1,0 +1,32 @@
+{
+  "nav": {
+    "home": "Home",
+    "browse": "Browse",
+    "library": "Library",
+    "favorites": "Favorites",
+    "history": "History",
+    "search": "Search manga...",
+    "profile": "Profile",
+    "settings": "Settings",
+    "signOut": "Sign out"
+  },
+  "sidebar": {
+    "navigation": "Navigation",
+    "library": "Library",
+    "categories": "Categories",
+    "trending": "Trending",
+    "new": "New",
+    "readingList": "Reading List",
+    "action": "Action",
+    "romance": "Romance",
+    "comedy": "Comedy",
+    "drama": "Drama",
+    "fantasy": "Fantasy",
+    "sliceOfLife": "Slice of Life"
+  },
+  "common": {
+    "welcome": "Welcome to ForMangaReaders",
+    "description": "Discover and read your favorite manga series from around the world. Join our community of manga enthusiasts and explore thousands of titles across all genres.",
+    "language": "Language"
+  }
+}

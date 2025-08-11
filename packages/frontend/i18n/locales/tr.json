@@ -1,0 +1,32 @@
+{
+  "nav": {
+    "home": "Ana Sayfa",
+    "browse": "Gözat",
+    "library": "Kütüphanem",
+    "favorites": "Favoriler",
+    "history": "Geçmiş",
+    "search": "Manga ara...",
+    "profile": "Profil",
+    "settings": "Ayarlar",
+    "signOut": "Çıkış Yap"
+  },
+  "sidebar": {
+    "navigation": "Navigasyon",
+    "library": "Kütüphane",
+    "categories": "Kategoriler",
+    "trending": "Trend",
+    "new": "Yeni Çıkanlar",
+    "readingList": "Okuma Listesi",
+    "action": "Aksiyon",
+    "romance": "Romantik",
+    "comedy": "Komedi",
+    "drama": "Drama",
+    "fantasy": "Fantastik",
+    "sliceOfLife": "Yaşam Dilimi"
+  },
+  "common": {
+    "welcome": "ForMangaReaders'a Hoş Geldiniz",
+    "description": "Dünyanın dört bir yanından favori manga serilerinizi keşfedin ve okuyun. Manga tutkunlarından oluşan topluluğumuza katılın ve tüm türlerden binlerce başlığı keşfedin.",
+    "language": "Dil"
+  }
+}

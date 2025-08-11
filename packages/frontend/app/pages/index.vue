@@ -1,21 +1,12 @@
 <template>
-  <div class="container mx-auto px-4 py-8">
-    <div class="flex justify-between items-center mb-8">
+  <div>
+    <div class="mb-8">
       <h1 class="text-4xl font-bold text-gray-900 dark:text-white">
-        Manga Readers
+        {{ $t('common.welcome') }}
       </h1>
-      <ClientOnly v-if="!colorMode?.forced">
-        <UButton
-          :icon="isDark ? 'i-lucide-moon' : 'i-lucide-sun'"
-          color="neutral"
-          variant="ghost"
-          @click="isDark = !isDark"
-        />
-
-        <template #fallback>
-          <div class="size-8" />
-        </template>
-      </ClientOnly>
+      <p class="mt-2 text-gray-600 dark:text-gray-400">
+        {{ $t('common.description') }}
+      </p>
     </div>
     
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -44,7 +35,13 @@
           <h3 class="text-xl font-semibold">Theme</h3>
         </template>
         <p class="text-gray-600 dark:text-gray-300">
-          Current theme: <span class="font-semibold">{{ isDark ? 'Dark' : 'Light' }}</span>
+          Current theme: 
+          <ClientOnly>
+            <span class="font-semibold">{{ isDark ? 'Dark' : 'Light' }}</span>
+            <template #fallback>
+              <span class="font-semibold">System</span>
+            </template>
+          </ClientOnly>
         </p>
       </UCard>
     </div>
@@ -54,12 +51,5 @@
 <script setup lang="ts">
 const colorMode = useColorMode()
 
-const isDark = computed({
-  get() {
-    return colorMode.value === 'dark'
-  },
-  set(_isDark) {
-    colorMode.preference = _isDark ? 'dark' : 'light'
-  }
-})
+const isDark = computed(() => colorMode.value === 'dark')
 </script>
