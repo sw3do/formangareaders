@@ -141,8 +141,8 @@ pub async fn google_callback(
         .await?;
 
     let redirect_url = format!(
-        "{}?token={}&user={}",
-        "http://localhost:3000/auth/callback",
+        "{}/auth/callback?token={}&user={}",
+        app_state.config.frontend_url,
         auth_response.token,
         serde_json::to_string(&auth_response.user).unwrap_or_default()
     );
@@ -165,8 +165,8 @@ pub async fn discord_callback(
         .await?;
 
     let redirect_url = format!(
-        "{}?token={}&user={}",
-        "http://localhost:3000/auth/callback",
+        "{}/auth/callback?token={}&user={}",
+        app_state.config.frontend_url,
         auth_response.token,
         serde_json::to_string(&auth_response.user).unwrap_or_default()
     );

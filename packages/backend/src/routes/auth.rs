@@ -14,6 +14,7 @@ use axum::{
 pub struct AppState {
     pub auth_service: AuthService,
     pub oauth_service: OAuthService,
+    pub config: Config,
 }
 
 pub fn create_auth_routes(db: Database) -> Router {
@@ -22,11 +23,12 @@ pub fn create_auth_routes(db: Database) -> Router {
     let auth_service =
         AuthService::new(db.clone(), config.clone()).expect("Failed to create auth service");
 
-    let oauth_service = OAuthService::new(db, config).expect("Failed to create oauth service");
+    let oauth_service = OAuthService::new(db, config.clone()).expect("Failed to create oauth service");
 
     let app_state = AppState {
         auth_service: auth_service.clone(),
         oauth_service,
+        config: config.clone(),
     };
 
     let protected_routes = Router::new()
