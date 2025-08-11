@@ -142,7 +142,17 @@ impl AuthService {
         Ok(())
     }
 
-    pub async fn forgot_password(&self, email: &str, _locale: &str) -> Result<()> {
+    pub async fn forgot_password(&self, email: &str, locale: &str) -> Result<()> {
+        if let Some(user) = self.user_service.find_by_email(email).await? {
+            if user.provider != "local" {
+                return Err(AppError::Validation(self.i18n.get_message(
+                    locale,
+                    "oauth-password-reset-not-allowed",
+                    None,
+                )));
+            }
+        }
+
         if let Some(reset_token) = self.user_service.create_reset_token(email).await? {
             let user = self.user_service.find_by_email(email).await?.unwrap();
 
@@ -199,5 +209,10 @@ impl AuthService {
             .ok_or_else(|| AppError::Authentication("User not found".to_string()))?;
 
         Ok(user)
+    }
+
+    pub async fn update_locale(&self, user_id: uuid::Uuid, locale: &str) -> Result<crate::models::UserResponse> {
+        let user = self.user_service.update_locale(user_id, locale).await?;
+        Ok(user.into())
     }
 }

@@ -126,6 +126,23 @@ pub async fn me(Extension(user): Extension<User>) -> Result<impl IntoResponse> {
     Ok(Json(user_response))
 }
 
+pub async fn update_locale(
+    State(app_state): State<AppState>,
+    Extension(user): Extension<User>,
+    Json(request): Json<serde_json::Value>,
+) -> Result<impl IntoResponse> {
+    let locale = request["locale"]
+        .as_str()
+        .ok_or_else(|| AppError::Validation("Locale is required".to_string()))?;
+
+    let updated_user = app_state
+        .auth_service
+        .update_locale(user.id, locale)
+        .await?;
+
+    Ok(Json(updated_user))
+}
+
 pub async fn google_auth(State(app_state): State<AppState>) -> Result<impl IntoResponse> {
     let (auth_url, _csrf_token) = app_state.oauth_service.get_google_auth_url();
     Ok(Redirect::temporary(&auth_url))
@@ -133,11 +150,13 @@ pub async fn google_auth(State(app_state): State<AppState>) -> Result<impl IntoR
 
 pub async fn google_callback(
     State(app_state): State<AppState>,
+    headers: HeaderMap,
     Query(params): Query<OAuthCallbackQuery>,
 ) -> Result<impl IntoResponse> {
+    let locale = get_locale_from_headers(&headers);
     let auth_response = app_state
         .oauth_service
-        .handle_google_callback(&params.code)
+        .handle_google_callback(&params.code, &locale)
         .await?;
 
     let redirect_url = format!(
@@ -157,11 +176,13 @@ pub async fn discord_auth(State(app_state): State<AppState>) -> Result<impl Into
 
 pub async fn discord_callback(
     State(app_state): State<AppState>,
+    headers: HeaderMap,
     Query(params): Query<OAuthCallbackQuery>,
 ) -> Result<impl IntoResponse> {
+    let locale = get_locale_from_headers(&headers);
     let auth_response = app_state
         .oauth_service
-        .handle_discord_callback(&params.code)
+        .handle_discord_callback(&params.code, &locale)
         .await?;
 
     let redirect_url = format!(

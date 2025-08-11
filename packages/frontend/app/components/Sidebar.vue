@@ -41,7 +41,7 @@
             <div>
               <h3 class="mb-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center">
                 <div class="w-2 h-2 bg-linear-to-r from-blue-500 to-purple-500 rounded-full mr-2"></div>
-                {{ $t('sidebar.navigation') }}
+                {{ t('sidebar.navigation') }}
               </h3>
               <ul class="space-y-2">
                 <li v-for="item in navigationItems" :key="item.name">
@@ -56,7 +56,7 @@
                       :name="item.icon"
                       class="mr-4 h-5 w-5 text-gray-400 group-hover:text-blue-500 dark:text-gray-500 dark:group-hover:text-blue-400 transition-all duration-300 relative z-10"
                     />
-                    <span class="relative z-10">{{ $t(item.name) }}</span>
+                    <span class="relative z-10">{{ t(item.name) }}</span>
                   </NuxtLink>
                 </li>
               </ul>
@@ -65,7 +65,7 @@
             <div v-if="libraryItems.length > 0">
               <h3 class="mb-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center">
                 <div class="w-2 h-2 bg-linear-to-r from-green-500 to-emerald-500 rounded-full mr-2"></div>
-                {{ $t('sidebar.library') }}
+                {{ t('sidebar.library') }}
               </h3>
               <ul class="space-y-2">
                 <li v-for="item in libraryItems" :key="item.name">
@@ -95,7 +95,7 @@
             <div v-if="categories.length > 0">
               <h3 class="mb-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center">
                 <div class="w-2 h-2 bg-linear-to-r from-purple-500 to-pink-500 rounded-full mr-2"></div>
-                {{ $t('sidebar.categories') }}
+                {{ t('sidebar.categories') }}
               </h3>
               <ul class="space-y-2">
                 <li v-for="category in categories" :key="category.name">
@@ -112,7 +112,7 @@
                         category.color
                       ]"
                     />
-                    <span class="relative z-10">{{ $t(category.name) }}</span>
+                    <span class="relative z-10">{{ t(category.name) }}</span>
                   </NuxtLink>
                 </li>
               </ul>
@@ -158,7 +158,7 @@
                       @click="$router.push('/profile')"
                     >
                       <Icon name="i-heroicons-user" class="mr-3 h-4 w-4" />
-                      {{ $t('nav.profile') }}
+                      {{ t('nav.profile') }}
                     </UButton>
                     <UButton
                       variant="ghost"
@@ -168,7 +168,7 @@
                       @click="$router.push('/settings')"
                     >
                       <Icon name="i-heroicons-cog-6-tooth" class="mr-3 h-4 w-4" />
-                      {{ $t('nav.settings') }}
+                      {{ t('nav.settings') }}
                     </UButton>
                     <div class="border-t border-gray-100 dark:border-gray-800 my-2"></div>
                     <UButton
@@ -179,7 +179,7 @@
                       @click="signOut"
                     >
                       <Icon name="i-heroicons-arrow-right-on-rectangle" class="mr-3 h-4 w-4" />
-                      {{ $t('nav.signOut') }}
+                      {{ t('nav.signOut') }}
                     </UButton>
                   </div>
                 </div>
@@ -215,6 +215,7 @@ const emit = defineEmits<{
 }>()
 
 const { $router } = useNuxtApp()
+const { t } = useI18n()
 
 const navigationItems: NavigationItem[] = [
   { name: 'nav.home', href: '/', icon: 'i-heroicons-home' },

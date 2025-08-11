@@ -23,7 +23,8 @@ pub fn create_auth_routes(db: Database) -> Router {
     let auth_service =
         AuthService::new(db.clone(), config.clone()).expect("Failed to create auth service");
 
-    let oauth_service = OAuthService::new(db, config.clone()).expect("Failed to create oauth service");
+    let oauth_service =
+        OAuthService::new(db, config.clone()).expect("Failed to create oauth service");
 
     let app_state = AppState {
         auth_service: auth_service.clone(),
@@ -34,6 +35,7 @@ pub fn create_auth_routes(db: Database) -> Router {
     let protected_routes = Router::new()
         .route("/me", get(me))
         .route("/logout", post(logout))
+        .route("/update-locale", post(update_locale))
         .route_layer(middleware::from_fn_with_state(
             auth_service,
             auth_middleware,

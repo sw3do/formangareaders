@@ -23,5 +23,6 @@ username-too-short = Kullanıcı adı en az 3 karakter olmalı
 username-too-long = Kullanıcı adı 50 karakterden az olmalı
 oauth-success = OAuth girişi başarılı
 oauth-failed = OAuth girişi başarısız
+oauth-password-reset-not-allowed = OAuth hesapları için şifre sıfırlama mevcut değil
 account-not-verified = Lütfen önce e-posta adresinizi doğrulayın
 verification-email-resent = Doğrulama e-postası yeniden gönderildi

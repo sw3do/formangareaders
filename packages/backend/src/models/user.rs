@@ -14,7 +14,6 @@ pub enum UserRole {
     Admin,
 }
 
-
 impl UserRole {
     pub fn is_admin(&self) -> bool {
         matches!(self, UserRole::Admin)
@@ -37,7 +36,12 @@ impl UserRole {
     }
 
     pub fn has_permission(&self, required_role: &UserRole) -> bool {
-        matches!((self, required_role), (UserRole::Admin, _) | (UserRole::Moderator, UserRole::User | UserRole::Moderator) | (UserRole::User, UserRole::User))
+        matches!(
+            (self, required_role),
+            (UserRole::Admin, _)
+                | (UserRole::Moderator, UserRole::User | UserRole::Moderator)
+                | (UserRole::User, UserRole::User)
+        )
     }
 }
 

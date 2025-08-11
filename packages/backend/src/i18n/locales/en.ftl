@@ -23,5 +23,6 @@ username-too-short = Username must be at least 3 characters
 username-too-long = Username must be less than 50 characters
 oauth-success = OAuth login successful
 oauth-failed = OAuth login failed
+oauth-password-reset-not-allowed = Password reset is not available for OAuth accounts
 account-not-verified = Please verify your email address first
 verification-email-resent = Verification email resent

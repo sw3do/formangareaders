@@ -30,5 +30,119 @@
     "language": "Dil",
     "loading": "Yükleniyor...",
     "appPreparing": "Uygulama hazırlanıyor"
+  },
+  "auth": {
+    "login": {
+      "title": "Hesabınıza giriş yapın",
+      "subtitle": "Tekrar hoş geldiniz! Devam etmek için giriş yapın.",
+      "button": "Giriş Yap",
+      "link": "Giriş Yap"
+    },
+    "register": {
+      "title": "Hesabınızı oluşturun",
+      "subtitle": "Bugün bize katılın ve yolculuğunuza başlayın.",
+      "button": "Hesap Oluştur",
+      "link": "Hesap Oluştur",
+      "alreadyHave": "Zaten hesabınız var mı?",
+      "success": "Kayıt başarılı!"
+    },
+    "forgotPassword": {
+      "title": "Şifrenizi mi unuttunuz?",
+      "subtitle": "E-posta adresinizi girin, size şifre sıfırlama bağlantısı gönderelim.",
+      "button": "Sıfırlama Bağlantısı Gönder",
+      "emailSent": "E-posta gönderildi!",
+      "checkEmail": "Şifre sıfırlama bağlantısı için lütfen e-postanızı kontrol edin."
+    },
+    "resetPassword": {
+      "title": "Şifrenizi sıfırlayın",
+      "subtitle": "Aşağıya yeni şifrenizi girin.",
+      "button": "Şifreyi Sıfırla",
+      "success": "Şifre sıfırlama başarılı!",
+      "successMessage": "Şifreniz başarıyla sıfırlandı. Artık yeni şifrenizle giriş yapabilirsiniz.",
+      "invalidToken": "Geçersiz veya süresi dolmuş sıfırlama kodu."
+    },
+    "verifyEmail": {
+      "title": "E-postanızı doğrulayın",
+      "verifying": "E-postanız doğrulanıyor...",
+      "pleaseWait": "E-posta adresinizi doğrularken lütfen bekleyin.",
+      "success": "E-posta doğrulandı!",
+      "successMessage": "E-postanız başarıyla doğrulandı. Artık giriş yapabilirsiniz.",
+      "failed": "Doğrulama başarısız",
+      "failedMessage": "E-postanızı doğrulayamadık. Bağlantı geçersiz veya süresi dolmuş olabilir.",
+      "resend": "Doğrulama E-postası Tekrar Gönder",
+      "enterEmail": "Lütfen e-posta adresinizi girin:"
+    },
+    "oauth": {
+      "google": "Google ile Devam Et",
+      "discord": "Discord ile Devam Et",
+      "or": "Veya şununla devam et"
+    },
+    "email": "E-posta",
+    "username": "Kullanıcı Adı",
+    "displayName": "Görünen Ad",
+    "password": "Şifre",
+    "newPassword": "Yeni Şifre",
+    "confirmPassword": "Şifreyi Onayla",
+    "rememberMe": "Beni hatırla",
+    "forgotPasswordLink": "Şifrenizi mi unuttunuz?",
+    "noAccount": "Hesabınız yok mu?",
+    "backToLogin": "Giriş Sayfasına Dön",
+    "signing": "Giriş yapılıyor...",
+    "creating": "Hesap oluşturuluyor...",
+    "sending": "Gönderiliyor...",
+    "resetting": "Sıfırlanıyor...",
+    "logout": "Çıkış Yap",
+    "passwordMismatch": "Şifreler eşleşmiyor",
+    "verified": "Doğrulanmış",
+    "unverified": "Doğrulanmamış",
+    "roles": {
+      "user": "Kullanıcı",
+      "moderator": "Moderatör",
+      "admin": "Yönetici"
+    },
+    "processingLogin": "Giriş işleniyor...",
+    "pleaseWait": "Lütfen bekleyin...",
+    "loginFailed": "Giriş başarısız",
+    "loginSuccess": "Giriş başarılı!",
+    "redirecting": "Yönlendiriliyor...",
+    "invalidCallback": "Geçersiz callback parametreleri",
+    "callbackError": "Kimlik doğrulama callback hatası",
+    "loggingIn": "Giriş yapılıyor...",
+    "orContinueWith": "veya şununla devam et",
+    "hasAccount": "Zaten hesabınız var mı?",
+    "optional": "isteğe bağlı",
+    "registering": "Hesap oluşturuluyor..."
+  },
+  "profile": {
+    "title": "Profil",
+    "accountInfo": "Hesap Bilgileri",
+    "memberSince": "Üyelik tarihi",
+    "language": "Dil",
+    "actions": "Hesap İşlemleri",
+    "changePassword": "Şifre Değiştir",
+    "oauthPasswordInfo": "OAuth ile giriş yaptığınız için şifre değiştiremezsiniz",
+    "notSet": "Ayarlanmamış",
+    "unknown": "Bilinmiyor",
+    "viewProfile": "Profili Görüntüle"
+  },
+  "home": {
+    "welcome": "FormangaReaders'a Hoş Geldiniz",
+    "subtitle": "En iyi manga okuma platformunuz",
+    "getStarted": "Başlayın"
+  },
+  "welcome": "Hoş geldiniz",
+  "footer": {
+    "privacy": "Gizlilik Politikası",
+    "terms": "Hizmet Şartları",
+    "contact": "İletişim",
+    "rights": "Tüm hakları saklıdır."
+  },
+  "errors": {
+    "generic": "Bir hata oluştu. Lütfen tekrar deneyin.",
+    "network": "Ağ hatası. Lütfen bağlantınızı kontrol edin.",
+    "unauthorized": "Bu işlemi gerçekleştirme yetkiniz yok.",
+    "forbidden": "Erişim reddedildi.",
+    "notFound": "İstenen kaynak bulunamadı.",
+    "validation": "Lütfen girişinizi kontrol edin ve tekrar deneyin."
   }
 }

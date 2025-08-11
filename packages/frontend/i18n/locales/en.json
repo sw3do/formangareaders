@@ -30,5 +30,119 @@
     "language": "Language",
     "loading": "Loading...",
     "appPreparing": "Application is being prepared"
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in to your account",
+      "subtitle": "Welcome back! Please sign in to continue.",
+      "button": "Sign In",
+      "link": "Sign In"
+    },
+    "register": {
+      "title": "Create your account",
+      "subtitle": "Join us today and start your journey.",
+      "button": "Create Account",
+      "link": "Create Account",
+      "alreadyHave": "Already have an account?",
+      "success": "Registration successful!"
+    },
+    "forgotPassword": {
+      "title": "Forgot your password?",
+      "subtitle": "Enter your email address and we'll send you a link to reset your password.",
+      "button": "Send Reset Link",
+      "emailSent": "Email sent!",
+      "checkEmail": "Please check your email for the password reset link."
+    },
+    "resetPassword": {
+      "title": "Reset your password",
+      "subtitle": "Enter your new password below.",
+      "button": "Reset Password",
+      "success": "Password reset successful!",
+      "successMessage": "Your password has been successfully reset. You can now sign in with your new password.",
+      "invalidToken": "Invalid or expired reset token."
+    },
+    "verifyEmail": {
+      "title": "Verify your email",
+      "verifying": "Verifying your email...",
+      "pleaseWait": "Please wait while we verify your email address.",
+      "success": "Email verified!",
+      "successMessage": "Your email has been successfully verified. You can now sign in.",
+      "failed": "Verification failed",
+      "failedMessage": "We couldn't verify your email. The link may be invalid or expired.",
+      "resend": "Resend Verification Email",
+      "enterEmail": "Please enter your email address:"
+    },
+    "oauth": {
+      "google": "Continue with Google",
+      "discord": "Continue with Discord",
+      "or": "Or continue with"
+    },
+    "email": "Email",
+    "username": "Username",
+    "displayName": "Display Name",
+    "password": "Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "rememberMe": "Remember me",
+    "forgotPasswordLink": "Forgot your password?",
+    "noAccount": "Don't have an account?",
+    "backToLogin": "Back to Sign In",
+    "signing": "Signing in...",
+    "creating": "Creating account...",
+    "sending": "Sending...",
+    "resetting": "Resetting...",
+    "logout": "Sign Out",
+    "passwordMismatch": "Passwords do not match",
+    "verified": "Verified",
+    "unverified": "Unverified",
+    "roles": {
+      "user": "User",
+      "moderator": "Moderator",
+      "admin": "Administrator"
+    },
+    "processingLogin": "Processing login...",
+    "pleaseWait": "Please wait...",
+    "loginFailed": "Login failed",
+    "loginSuccess": "Login successful!",
+    "redirecting": "Redirecting...",
+    "invalidCallback": "Invalid callback parameters",
+    "callbackError": "Authentication callback error",
+    "loggingIn": "Signing in...",
+    "orContinueWith": "or continue with",
+    "hasAccount": "Already have an account?",
+    "optional": "optional",
+    "registering": "Creating account..."
+  },
+  "profile": {
+    "title": "Profile",
+    "accountInfo": "Account Information",
+    "memberSince": "Member since",
+    "language": "Language",
+    "actions": "Account Actions",
+    "changePassword": "Change Password",
+    "oauthPasswordInfo": "You cannot change password as you signed in with OAuth",
+    "notSet": "Not set",
+    "unknown": "Unknown",
+    "viewProfile": "View Profile"
+  },
+  "home": {
+    "welcome": "Welcome to FormangaReaders",
+    "subtitle": "Your ultimate manga reading platform",
+    "getStarted": "Get Started"
+  },
+  "welcome": "Welcome",
+  "footer": {
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "contact": "Contact Us",
+    "rights": "All rights reserved."
+  },
+  "errors": {
+    "generic": "An error occurred. Please try again.",
+    "network": "Network error. Please check your connection.",
+    "unauthorized": "You are not authorized to perform this action.",
+    "forbidden": "Access denied.",
+    "notFound": "The requested resource was not found.",
+    "validation": "Please check your input and try again."
   }
 }

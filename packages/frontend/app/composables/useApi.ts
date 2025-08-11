@@ -11,6 +11,26 @@ export const useApi = () => {
     }
   })
 
+  apiInstance.interceptors.request.use((config) => {
+    const tokenCookie = useCookie('auth-token')
+    if (tokenCookie.value) {
+      config.headers.Authorization = `Bearer ${tokenCookie.value}`
+    }
+    return config
+  })
+
+  apiInstance.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      if (error.response?.status === 401) {
+        const tokenCookie = useCookie('auth-token')
+        tokenCookie.value = null
+        navigateTo('/auth/login')
+      }
+      return Promise.reject(error)
+    }
+  )
+
   const apiCall = async <T = any>(endpoint: string, options?: AxiosRequestConfig): Promise<T> => {
     try {
       const response: AxiosResponse<T> = await apiInstance({

@@ -15,7 +15,7 @@
             <div class="px-3 py-2 border-b border-gray-100 dark:border-gray-800">
                <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center">
                  <div class="w-2 h-2 bg-linear-to-r from-indigo-500 to-purple-500 rounded-full mr-2"></div>
-                 {{ $t('common.language') }}
+                 {{ t('common.language') }}
                </div>
              </div>
             <UButton
@@ -70,8 +70,7 @@
 <script setup lang="ts">
 type LocaleCode = 'tr' | 'en'
 
-const { locale, locales } = useI18n()
-const switchLocalePath = useSwitchLocalePath()
+const { locale, locales, t, setLocale } = useI18n()
 
 const currentLocale = computed(() => locale.value)
 
@@ -88,7 +87,9 @@ const showLabel = ref(true)
 
 const switchLanguage = async (code: string) => {
   try {
-    await navigateTo(switchLocalePath(code as LocaleCode))
+    setLocale(code as LocaleCode)
+    await nextTick()
+    await navigateTo(useRoute().fullPath)
   } catch (error) {
     console.error('Language switching failed:', error)
   }

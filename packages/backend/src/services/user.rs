@@ -134,7 +134,7 @@ impl UserService {
             r#"
             UPDATE users 
             SET reset_token = $1, reset_expires_at = $2
-            WHERE email = $3
+            WHERE email = $3 AND provider = 'local'
             "#,
         )
         .bind(&reset_token)
@@ -176,19 +176,22 @@ impl UserService {
         avatar_url: Option<String>,
         provider: &str,
         provider_id: &str,
+        locale: Option<String>,
     ) -> Result<User> {
         if let Some(user) = self.find_by_email(email).await? {
             if user.provider == provider && user.provider_id.as_deref() == Some(provider_id) {
                 return Ok(user);
             }
 
-            if user.provider == "local" {
+            if user.provider == "local" || user.provider != provider {
+                let user_locale = locale.unwrap_or_else(|| user.locale.clone());
                 let updated_user = sqlx::query_as::<_, User>(
                     r#"
                     UPDATE users 
                     SET provider = $1, provider_id = $2, is_verified = true,
                         display_name = COALESCE($3, display_name),
-                        avatar_url = COALESCE($4, avatar_url)
+                        avatar_url = COALESCE($4, avatar_url),
+                        locale = $6
                     WHERE id = $5
                     RETURNING *
                     "#,
@@ -198,6 +201,7 @@ impl UserService {
                 .bind(&display_name)
                 .bind(&avatar_url)
                 .bind(user.id)
+                .bind(&user_locale)
                 .fetch_one(self.db.pool())
                 .await?;
 
@@ -205,22 +209,47 @@ impl UserService {
             }
         }
 
+        let mut final_username = username.to_string();
+        let mut counter = 1;
+        
+        while let Some(_) = sqlx::query("SELECT id FROM users WHERE username = $1")
+            .bind(&final_username)
+            .fetch_optional(self.db.pool())
+            .await? {
+            final_username = format!("{}{}", username, counter);
+            counter += 1;
+        }
+
+        let user_locale = locale.unwrap_or_else(|| "en".to_string());
         let user = sqlx::query_as::<_, User>(
             r#"
             INSERT INTO users (
                 email, username, display_name, avatar_url, 
-                is_verified, provider, provider_id
+                is_verified, provider, provider_id, locale
             )
-            VALUES ($1, $2, $3, $4, true, $5, $6)
+            VALUES ($1, $2, $3, $4, true, $5, $6, $7)
             RETURNING *
             "#,
         )
         .bind(email)
-        .bind(username)
+        .bind(&final_username)
         .bind(&display_name)
         .bind(&avatar_url)
         .bind(provider)
         .bind(provider_id)
+        .bind(&user_locale)
+        .fetch_one(self.db.pool())
+        .await?;
+
+        Ok(user)
+    }
+
+    pub async fn update_locale(&self, user_id: Uuid, locale: &str) -> Result<User> {
+        let user = sqlx::query_as::<_, User>(
+            "UPDATE users SET locale = $1 WHERE id = $2 RETURNING *",
+        )
+        .bind(locale)
+        .bind(user_id)
         .fetch_one(self.db.pool())
         .await?;
 

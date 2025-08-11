@@ -15,7 +15,7 @@ use serde::Deserialize;
 #[derive(Debug, Deserialize)]
 struct GoogleUserInfo {
     id: String,
-    email: String,
+    email: Option<String>,
     name: Option<String>,
     picture: Option<String>,
     given_name: Option<String>,
@@ -26,7 +26,6 @@ struct GoogleUserInfo {
 struct DiscordUserInfo {
     id: String,
     username: String,
-    _discriminator: String,
     email: Option<String>,
     avatar: Option<String>,
     global_name: Option<String>,
@@ -121,7 +120,7 @@ impl OAuthService {
         (auth_url.to_string(), csrf_token.secret().clone())
     }
 
-    pub async fn handle_google_callback(&self, code: &str) -> Result<AuthResponse> {
+    pub async fn handle_google_callback(&self, code: &str, locale: &str) -> Result<AuthResponse> {
         let token_result = self
             .google_client
             .exchange_code(AuthorizationCode::new(code.to_string()))
@@ -140,6 +139,11 @@ impl OAuthService {
             .json()
             .await?;
 
+        let email = user_info.email.ok_or_else(|| {
+            tracing::error!("Google account has no verified email");
+            AppError::OAuth("Google account must have a verified email".to_string())
+        })?;
+
         let username = user_info
             .given_name
             .or(user_info.name.clone())
@@ -151,12 +155,13 @@ impl OAuthService {
         let user = self
             .user_service
             .find_or_create_oauth_user(
-                &user_info.email,
+                &email,
                 &username,
                 display_name,
                 avatar_url,
                 "google",
                 &user_info.id,
+                Some(locale.to_string()),
             )
             .await?;
 
@@ -168,26 +173,52 @@ impl OAuthService {
         })
     }
 
-    pub async fn handle_discord_callback(&self, code: &str) -> Result<AuthResponse> {
+    pub async fn handle_discord_callback(&self, code: &str, locale: &str) -> Result<AuthResponse> {
+        tracing::info!("Starting Discord OAuth callback with code: {}", &code[..10]);
+
         let token_result = self
             .discord_client
             .exchange_code(AuthorizationCode::new(code.to_string()))
             .request_async(async_http_client)
             .await
-            .map_err(|e| AppError::OAuth(format!("Failed to exchange Discord code: {e}")))?;
+            .map_err(|e| {
+                tracing::error!("Failed to exchange Discord code: {}", e);
+                AppError::OAuth(format!("Failed to exchange Discord code: {e}"))
+            })?;
 
         let access_token = token_result.access_token().secret();
+        tracing::info!("Successfully obtained Discord access token");
 
         let client = reqwest::Client::new();
-        let user_info: DiscordUserInfo = client
+        let response = client
             .get("https://discord.com/api/users/@me")
             .bearer_auth(access_token)
             .send()
-            .await?
-            .json()
-            .await?;
+            .await
+            .map_err(|e| {
+                tracing::error!("Failed to fetch Discord user info: {}", e);
+                AppError::HttpClient(e)
+            })?;
+
+        if !response.status().is_success() {
+            let status = response.status();
+            let error_text = response.text().await.unwrap_or_default();
+            tracing::error!("Discord API error: {} - {}", status, error_text);
+            return Err(AppError::OAuth(format!("Discord API error: {status}")));
+        }
+
+        let user_info: DiscordUserInfo = response.json().await.map_err(|e| {
+            tracing::error!("Failed to parse Discord user info JSON: {}", e);
+            AppError::HttpClient(e)
+        })?;
+
+        tracing::info!(
+            "Successfully fetched Discord user info for user: {}",
+            user_info.username
+        );
 
         let email = user_info.email.ok_or_else(|| {
+            tracing::error!("Discord account has no verified email");
             AppError::OAuth("Discord account must have a verified email".to_string())
         })?;
 
@@ -206,6 +237,7 @@ impl OAuthService {
 
         let display_name = user_info.global_name.or(Some(user_info.username));
 
+        tracing::info!("Creating/finding user with email: {}", email);
         let user = self
             .user_service
             .find_or_create_oauth_user(
@@ -215,10 +247,22 @@ impl OAuthService {
                 avatar_url,
                 "discord",
                 &user_info.id,
+                Some(locale.to_string()),
             )
-            .await?;
+            .await
+            .map_err(|e| {
+                tracing::error!("Failed to find or create OAuth user: {}", e);
+                e
+            })?;
 
-        let token = self.jwt_service.generate_token(user.id, &user.email)?;
+        tracing::info!("Generating JWT token for user: {}", user.id);
+        let token = self
+            .jwt_service
+            .generate_token(user.id, &user.email)
+            .map_err(|e| {
+                tracing::error!("Failed to generate JWT token: {}", e);
+                e
+            })?;
 
         Ok(AuthResponse {
             user: user.into(),
