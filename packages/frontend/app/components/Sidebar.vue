@@ -121,71 +121,65 @@
         </nav>
 
         <div class="border-t border-gray-200/50 dark:border-gray-700/50 p-6 bg-linear-to-r from-gray-50/50 to-gray-100/50 dark:from-gray-800/50 dark:to-gray-900/50">
-          <div class="flex items-center space-x-4 p-3 rounded-xl bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border border-gray-200/30 dark:border-gray-700/30 shadow-sm hover:shadow-md transition-all duration-300">
-            <div class="relative">
-              <UAvatar
-                src="https://avatars.githubusercontent.com/u/739984?v=4"
-                alt="User avatar"
-                size="sm"
-                class="ring-2 ring-blue-200 dark:ring-blue-800 transition-all duration-300"
-              />
-              <div class="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full border-2 border-white dark:border-gray-800 animate-pulse"></div>
+          <UPopover>
+            <div class="flex items-center space-x-4 p-3 rounded-xl bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border border-gray-200/30 dark:border-gray-700/30 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer">
+              <div class="relative">
+                <UAvatar
+                  src="https://avatars.githubusercontent.com/u/739984?v=4"
+                  alt="User avatar"
+                  size="sm"
+                  class="ring-2 ring-blue-200 dark:ring-blue-800 transition-all duration-300"
+                />
+                <div class="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full border-2 border-white dark:border-gray-800 animate-pulse"></div>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-semibold text-gray-900 dark:text-white truncate">
+                  John Doe
+                </p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 truncate">
+                  john@example.com
+                </p>
+              </div>
+              <Icon name="i-heroicons-chevron-up" class="w-4 h-4 text-gray-400 transition-transform duration-200" />
             </div>
-            <div class="flex-1 min-w-0">
-              <p class="text-sm font-semibold text-gray-900 dark:text-white truncate">
-                John Doe
-              </p>
-              <p class="text-xs text-gray-500 dark:text-gray-400 truncate">
-                john@example.com
-              </p>
-            </div>
-            <UPopover>
-              <UButton
-                icon="i-heroicons-ellipsis-vertical"
-                variant="ghost"
-                color="neutral"
-                size="xs"
-                class="hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200 hover:scale-105 rounded-lg"
-              />
-              <template #panel>
-                <div class="p-3 w-44 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/50 rounded-2xl shadow-xl">
-                  <div class="space-y-2">
-                    <UButton
-                      variant="ghost"
-                      color="neutral"
-                      size="sm"
-                      class="w-full justify-start hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200 rounded-xl"
-                      @click="$router.push('/profile')"
-                    >
-                      <Icon name="i-heroicons-user" class="mr-3 h-4 w-4" />
-                      {{ t('nav.profile') }}
-                    </UButton>
-                    <UButton
-                      variant="ghost"
-                      color="neutral"
-                      size="sm"
-                      class="w-full justify-start hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200 rounded-xl"
-                      @click="$router.push('/settings')"
-                    >
-                      <Icon name="i-heroicons-cog-6-tooth" class="mr-3 h-4 w-4" />
-                      {{ t('nav.settings') }}
-                    </UButton>
-                    <div class="border-t border-gray-100 dark:border-gray-800 my-2"></div>
-                    <UButton
-                      variant="ghost"
-                      color="neutral"
-                      size="sm"
-                      class="w-full justify-start hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 transition-all duration-200 rounded-xl"
-                      @click="signOut"
-                    >
-                      <Icon name="i-heroicons-arrow-right-on-rectangle" class="mr-3 h-4 w-4" />
-                      {{ t('nav.signOut') }}
-                    </UButton>
-                  </div>
+            <template #panel>
+              <div class="p-3 w-44 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/50 rounded-2xl shadow-xl">
+                <div class="space-y-2">
+                  <UButton
+                    variant="ghost"
+                    color="neutral"
+                    size="sm"
+                    class="w-full justify-start hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200 rounded-xl"
+                    @click="$router.push('/profile')"
+                  >
+                    <Icon name="i-heroicons-user" class="mr-3 h-4 w-4" />
+                    {{ t('nav.profile') }}
+                  </UButton>
+                  <UButton
+                    variant="ghost"
+                    color="neutral"
+                    size="sm"
+                    class="w-full justify-start hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200 rounded-xl"
+                    @click="$router.push('/settings')"
+                  >
+                    <Icon name="i-heroicons-cog-6-tooth" class="mr-3 h-4 w-4" />
+                    {{ t('nav.settings') }}
+                  </UButton>
+                  <div class="border-t border-gray-100 dark:border-gray-800 my-2"></div>
+                  <UButton
+                    variant="ghost"
+                    color="neutral"
+                    size="sm"
+                    class="w-full justify-start hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 transition-all duration-200 rounded-xl"
+                    @click="signOut"
+                  >
+                    <Icon name="i-heroicons-arrow-right-on-rectangle" class="mr-3 h-4 w-4" />
+                    {{ t('nav.signOut') }}
+                  </UButton>
                 </div>
-              </template>
-            </UPopover>
-          </div>
+              </div>
+            </template>
+          </UPopover>
         </div>
       </div>
     </aside>
